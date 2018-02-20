@@ -1,10 +1,12 @@
 
 #include "MessageIdentifiers.h"
 #include "RakPeerInterface.h"
+#include "BitStream.h"
 
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <map>
 
 static int SERVER_PORT = 65000;
 static int CLIENT_PORT = 65001;
@@ -18,6 +20,25 @@ unsigned char packetIdentifier;
 bool isServer = false;
 bool isRunning = true;
 unsigned short g_totalPlayers = 0;
+
+enum {
+	ID_THEGAME_LOBBY = ID_USER_PACKET_ENUM,
+	ID_THEGAME_ACTION, 
+};
+
+struct SPlayer
+{
+	//struct for declaring player related things like name, health
+	std::string name;
+	RakNet::SystemAddress address;
+	//state
+	
+};
+
+RakNet::SystemAddress g_serverAddress;
+
+std::map<unsigned long, SPlayer> m_playerMap;
+
 
 enum NetworkStates
 {
@@ -40,6 +61,7 @@ void OnConnectionAccepted(RakNet::Packet* packet)
 	}
 	//we have successfully connected, go to lobby
 	g_networkState = NS_Lobby;
+	g_serverAddress = packet->systemAddress;
 }
 
 void OnIncomingConnection(RakNet::Packet* packet)
@@ -77,6 +99,28 @@ void InputHandler()
 				std::cout << "Client creating socket..." << std::endl;
 			}
 		}
+		else if (g_networkState == NS_Lobby)
+		{
+			std::cout << "If you would like to play this game, enter your player name" << std::endl;
+			std::cout << "If you would like to quit, type quit." << std::endl;
+			std::cin >> userInput;
+			if (strcmp(userInput, "quit") == 0)
+			{
+				//heartbreaking
+				assert(0);
+			}
+			else
+			{
+				//send our first packet
+				RakNet::BitStream myBitStream;
+				//First thing to write, is packet message identifier
+				myBitStream.Write((RakNet::MessageID)ID_THEGAME_LOBBY);
+				RakNet::RakString name(userInput);
+				myBitStream.Write(name);
+
+				g_rakPeerInterface->Send(&myBitStream,HIGH_PRIORITY, RELIABLE_ORDERED, 0, g_serverAddress, false);
+			}
+		}
 
 		std::this_thread::sleep_for(std::chrono::microseconds(100));
 	}
@@ -94,6 +138,16 @@ unsigned char GetPacketIdentifier(RakNet::Packet *packet)
 	}
 	else
 		return (unsigned char)packet->data[0];
+}
+
+bool HandleLowLevelPacket(RakNet::Packet* packet)
+{
+	bool isHandled = true;
+	unsigned char packetIdentifier = GetPacketIdentifier(packet);
+	switch ()
+	{
+
+	}
 }
 
 void PacketHandler()
