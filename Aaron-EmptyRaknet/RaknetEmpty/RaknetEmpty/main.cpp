@@ -17,6 +17,7 @@ unsigned char packetIdentifier;
 
 bool isServer = false;
 bool isRunning = true;
+unsigned short g_totalPlayers = 0;
 
 enum NetworkStates
 {
@@ -24,10 +25,33 @@ enum NetworkStates
 	NS_CreateSocket,
 	NS_PendingConnection,
 	NS_Connected,
-	NS_Running
+	NS_Running,
+	NS_Lobby,
 };
 
 NetworkStates g_networkState = NS_Decision;
+
+void OnConnectionAccepted(RakNet::Packet* packet)
+{
+	if (isServer)
+	{
+		//server should never request connections, only clients do
+		assert(0);
+	}
+	//we have successfully connected, go to lobby
+	g_networkState = NS_Lobby;
+}
+
+void OnIncomingConnection(RakNet::Packet* packet)
+{
+	if (!isServer)
+	{
+		assert(0);
+	}
+	g_totalPlayers++;
+	unsigned short numConnections = g_rakPeerInterface->NumberOfConnections();
+	std::cout << "Total Players: " << g_totalPlayers << "Num Connection: " << numConnections << std::endl;
+}
 
 void InputHandler()
 {
@@ -101,8 +125,10 @@ void PacketHandler()
 			case ID_REMOTE_CONNECTION_LOST: // Server telling the clients of another client disconnecting forcefully.  You can manually broadcast this in a peer to peer enviroment if you want.
 				printf("ID_REMOTE_CONNECTION_LOST\n");
 				break;
+			case ID_NEW_INCOMING_CONNECTION:
 			case ID_REMOTE_NEW_INCOMING_CONNECTION: // Server telling the clients of another client connecting.  You can manually broadcast this in a peer to peer enviroment if you want.
 				printf("ID_REMOTE_NEW_INCOMING_CONNECTION\n");
+				OnIncomingConnection(packet);
 				break;
 			case ID_CONNECTION_BANNED: // Banned from this server
 				printf("We are banned from this server.\n");
@@ -130,6 +156,7 @@ void PacketHandler()
 				// This tells the client they have connected
 				printf("ID_CONNECTION_REQUEST_ACCEPTED to %s with GUID %s\n", packet->systemAddress.ToString(true), packet->guid.ToString());
 				printf("My external address is %s\n", g_rakPeerInterface->GetExternalID(packet->systemAddress).ToString(true));
+				OnConnectionAccepted(packet);
 				break;
 			case ID_CONNECTED_PING:
 			case ID_UNCONNECTED_PING:
@@ -176,6 +203,10 @@ int main()
 			{
 				RakNet::SocketDescriptor socketDescriptor(CLIENT_PORT, nullptr);
 				socketDescriptor.socketFamily = AF_INET;
+
+				while (RakNet::IRNS2_Berkley::IsPortInUse(socketDescriptor.port, socketDescriptor.hostAddress, socketDescriptor.socketFamily, SOCK_DGRAM) == true)
+					socketDescriptor.port++;
+				
 				g_rakPeerInterface->Startup(8, &socketDescriptor, 1);
 
 				// client connection
@@ -187,6 +218,8 @@ int main()
 			}
 		}
 	}
+
+
 	
 
 	inputHandler.join();
