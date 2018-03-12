@@ -1,10 +1,4 @@
 ﻿  main.cpp
-e:\aaron's stuff\documents\t163 work\multiplayer\multiplayersyschat\aaron-emptyraknet\raknetempty\raknetempty\main.cpp(97): error C2065: 'm_playerMap': undeclared identifier
-e:\aaron's stuff\documents\t163 work\multiplayer\multiplayersyschat\aaron-emptyraknet\raknetempty\raknetempty\main.cpp(98): error C3312: no callable 'begin' function found for type 'unknown-type'
-e:\aaron's stuff\documents\t163 work\multiplayer\multiplayersyschat\aaron-emptyraknet\raknetempty\raknetempty\main.cpp(98): error C3312: no callable 'end' function found for type 'unknown-type'
-e:\aaron's stuff\documents\t163 work\multiplayer\multiplayersyschat\aaron-emptyraknet\raknetempty\raknetempty\main.cpp(99): error C2065: 'x': undeclared identifier
-e:\aaron's stuff\documents\t163 work\multiplayer\multiplayersyschat\aaron-emptyraknet\raknetempty\raknetempty\main.cpp(99): error C2228: left of '.second' must have class/struct/union
-  e:\aaron's stuff\documents\t163 work\multiplayer\multiplayersyschat\aaron-emptyraknet\raknetempty\raknetempty\main.cpp(99): note: type is 'unknown-type'
-e:\aaron's stuff\documents\t163 work\multiplayer\multiplayersyschat\aaron-emptyraknet\raknetempty\raknetempty\main.cpp(99): error C2228: left of '.address' must have class/struct/union
-e:\aaron's stuff\documents\t163 work\multiplayer\multiplayersyschat\aaron-emptyraknet\raknetempty\raknetempty\main.cpp(99): error C2661: 'RakNet::RakPeerInterface::Send': no overloaded function takes 5 arguments
-e:\aaron's stuff\documents\t163 work\multiplayer\multiplayersyschat\aaron-emptyraknet\raknetempty\raknetempty\main.cpp(170): warning C4477: 'printf' : format string '%I64u' requires an argument of type 'unsigned __int64', but variadic argument 1 has type 'RakNet::RakNetGUID'
+e:\aaron's stuff\documents\t163 work\multiplayer\multiplayersyschat\aaron-emptyraknet\raknetempty\raknetempty\main.cpp(175): warning C4477: 'printf' : format string '%I64u' requires an argument of type 'unsigned __int64', but variadic argument 1 has type 'RakNet::RakNetGUID'
+  RaknetEmpty.vcxproj -> E:\Aaron's Stuff\Documents\T163 Work\Multiplayer\MultiplayerSysChat\Aaron-EmptyRaknet\RaknetEmpty\Debug\RaknetEmpty.exe
+  RaknetEmpty.vcxproj -> E:\Aaron's Stuff\Documents\T163 Work\Multiplayer\MultiplayerSysChat\Aaron-EmptyRaknet\RaknetEmpty\Debug\RaknetEmpty.pdb (Partial PDB)

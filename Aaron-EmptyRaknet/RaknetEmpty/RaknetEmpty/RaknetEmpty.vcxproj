@@ -127,7 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\..\..\Aaron%27s Stuff\Documents\T163 Work\Multiplayer\MultiplayerSysChat\Aaron-EmptyRaknet\RaknetEmpty\RaknetEmpty\Player.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\..\..\Aaron%27s Stuff\Documents\T163 Work\Multiplayer\MultiplayerSysChat\Aaron-EmptyRaknet\RaknetEmpty\RaknetEmpty\Player.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\Aaron%27s Stuff\Documents\T163 Work\Multiplayer\MultiplayerSysChat\Aaron-EmptyRaknet\RaknetEmpty\RaknetEmpty\Rogue.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\Aaron%27s Stuff\Documents\T163 Work\Multiplayer\MultiplayerSysChat\Aaron-EmptyRaknet\RaknetEmpty\RaknetEmpty\Warlock.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\..\Aaron%27s Stuff\Documents\T163 Work\Multiplayer\MultiplayerSysChat\Aaron-EmptyRaknet\RaknetEmpty\RaknetEmpty\Warrior.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
